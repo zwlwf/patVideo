@@ -53,3 +53,18 @@ vector<int> patToKeyFrameSerial(vector<double>& clickTime, int fr) {
 	}
 	return ans;
 }
+
+// one simple way to create video
+void keyFrameSerialToVideo(std::vector<int>& kf) {
+	FILE* fp = fopen("post.sh","w");
+	if(!fp) {
+		printf("failed to open post.sh\n");
+		return ;
+	}
+
+	for(int i=0; i<kf.size(); i++) {
+		fprintf(fp, "cp %03d.jpg a%03d.jpg\n", kf[i], i);
+	}
+	fprintf(fp, "\n\nffmpeg -i a\%d.jpg out.mp4\n");
+	fclose(fp);
+}
